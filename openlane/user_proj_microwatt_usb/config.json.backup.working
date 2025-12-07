@@ -1,0 +1,159 @@
+{
+  "DESIGN_NAME": "microwatt_wrapper",
+
+  "VERILOG_DEFINES": [
+    "USE_POWER_PINS"
+  ],
+  "YOSYS_DEFINES": ["USE_POWER_PINS"],
+
+  "PDK" : "sky130A",
+
+  "VERILOG_FILES": [
+    "dir::rtl/microwatt_q17.v",
+    "dir::rtl/microwatt_wrapper.v",
+    "dir::rtl/tap_top.v",
+    "dir::rtl/raminfr.v",
+    "dir::rtl/uart_defines.v",
+    "dir::rtl/uart_receiver.v",
+    "dir::rtl/uart_regs.v",
+    "dir::rtl/uart_rfifo.v",
+    "dir::rtl/uart_sync_flops.v",
+    "dir::rtl/uart_tfifo.v",
+    "dir::rtl/uart_top.v",
+    "dir::rtl/uart_transmitter.v",
+    "dir::rtl/uart_wb.v"
+  ],
+
+
+  "VERILOG_FILES_BLACKBOX": [
+     "dir::rtl/RAM512.v",
+     "dir::rtl/RAM32_1RW1R.v",
+     "dir::rtl/Microwatt_FP_DFFRFile.v",
+     "dir::rtl/multiply_add_64x64.v"
+  ],
+
+  "EXTRA_LEFS": [
+    "dir::lef/Microwatt_FP_DFFRFile.lef",
+    "dir::lef/RAM32_1RW1R.lef",
+    "dir::lef/multiply_add_64x64.lef",
+    "dir::lef/RAM512.lef"
+      ],
+  "EXTRA_GDS_FILES": [
+    "dir::gds/Microwatt_FP_DFFRFile.gds",
+    "dir::gds/multiply_add_64x64.gds",
+    "dir::gds/RAM32_1RW1R.gds",
+    "dir::gds/RAM512.gds"
+
+  ],
+  "EXTRA_LIBS": [
+
+    "dir::libs/Microwatt_FP_DFFRFile.lib",
+    "dir::libs/multiply_add_64x64.lib" ,
+    "dir::libs/RAM32_1RW1R.lib",
+    "dir::libs/RAM512.lib"
+  ],
+
+
+     "FP_PDN_MACRO_HOOKS": [
+
+"soc_inst.bram_bram0.ram_0.memory_0                                  vccd1 vssd1 VPWR VGND", 
+"soc_inst.processors_1_core.dcache_0.rams_n1_way.cache_ram_0          vccd1 vssd1 VPWR VGND",
+"soc_inst.processors_1_core.icache_0.rams_n1_way.cache_ram_0          vccd1 vssd1 VPWR VGND", 
+"soc_inst.processors_1_core.execute1_0.multiply_0.multiplier         vccd1 vssd1 VPWR VGND",
+"soc_inst.processors_1_core.with_fpu_fpu_0.fpu_multiply_0.multiplier vccd1 vssd1 VPWR VGND", 
+"soc_inst.processors_1_core.register_file_0.register_file_0          vccd1 vssd1 VPWR VGND"
+
+],
+
+  "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
+
+
+  "VERILOG_POWER_DEFINE": "USE_POWER_PINS",
+    "FP_TAP_HORIZONTAL_HALO": "40",
+    "FP_PDN_HORIZONTAL_HALO": "40",
+    "FP_TAP_VERTICAL_HALO": "10",
+    "FP_PDN_VERTICAL_HALO": "10",
+
+  "CLOCK_PORT": "ext_clk",
+  "CLOCK_PERIOD": 30.0,
+    "MAX_TRANSITION_CONSTRAINT": 0.75,
+    "PL_RANDOM_GLB_PLACEMENT": 1,
+    "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
+        "QUIT_ON_SYNTH_CHECKS": 0,
+    "SYNTH_MAX_FANOUT" : 8,
+    "SYNTH_STRATEGY": "DELAY 1",
+    "PL_RESIZER_DESIGN_OPTIMIZATIONS": 1,
+    "PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
+    "GLB_RESIZER_TIMING_OPTIMIZATIONS": 1,
+    "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 1, 
+    "RUN_CTS": 1,
+    "FP_PDN_ENABLE_RAILS": 1,
+    "FP_PDN_VPITCH": 180,
+    "FP_PDN_HPITCH": 180,
+    "FP_PDN_VOFFSET": 5,
+    "FP_PDN_HOFFSET": 5,
+    "FP_SIZING": "absolute",
+    "RUN_CVC": 1,
+    "FP_PDN_CORE_RING": 1,
+    "PL_TIME_DRIVEN" : 1 ,
+
+  "PL_TARGET_DENSITY": "0.25",
+  "FP_PDN_CORE_RING_VWIDTH": 3.1,
+  "FP_PDN_CORE_RING_HWIDTH": 3.1,
+  "FP_PDN_CORE_RING_VOFFSET": 12.45,
+  "FP_PDN_CORE_RING_HOFFSET": 12.45,
+  "FP_PDN_CORE_RING_VSPACING": 1.7,
+  "FP_PDN_CORE_RING_HSPACING": 1.7,
+  "FP_PDN_VWIDTH": 3.1,
+  "FP_PDN_HWIDTH": 3.1,
+  "FP_PDN_VSPACING": "expr::(5 * $FP_PDN_CORE_RING_VWIDTH)",
+  "FP_PDN_HSPACING": "expr::(5 * $FP_PDN_CORE_RING_HWIDTH)",
+  "PL_RESIZER_SETUP_SLACK_MARGIN": 0.3,
+  "GLB_RESIZER_SETUP_SLACK_MARGIN": 0.3,
+  "GLB_RESIZER_HOLD_SLACK_MARGIN": 0.5,
+  "PL_RESIZER_HOLD_SLACK_MARGIN": 0.5,
+  "PL_RESIZER_HOLD_MAX_BUFFER_PERCENT" : 95,
+  "GLB_RESIZER_HOLD_MAX_BUFFER_PERCENT" : 95,
+   "RT_MAX_LAYER": "met4",
+      "VDD_NETS": [
+        "vccd1"
+    ],
+  "GND_NETS": [
+        "vssd1"
+    ],
+
+        "CTS_CLK_BUFFER_LIST": [
+      "sky130_fd_sc_hd__clkbuf_8",
+      "sky130_fd_sc_hd__clkbuf_4",
+      "sky130_fd_sc_hd__clkbuf_2"
+    ],
+    "CTS_DISABLE_POST_PROCESSING": "0",
+
+    "CTS_SINK_CLUSTERING_MAX_DIAMETER": "50",
+    "CTS_DISTANCE_BETWEEN_BUFFERS": "300",
+    "CTS_CLK_MAX_WIRE_LENGTH": "500",
+    "CTS_TARGET_SKEW": 0.2,
+
+
+    "DIE_AREA": "0 0 2950.63 4366.630",
+    "CORE_AREA": "40 40 2900.63 4326.630",
+
+
+    "FP_PDN_CFG": "dir::pdn_cfg.tcl",
+    "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
+    "RUN_LINTER": 0,
+    "RUN_LVS": 1,
+    "MAGIC_DEF_LABELS": 0,
+    "RUN_IRDROP_REPORT": 0,
+    "GPL_CELL_PADDING": "2",
+    "DPL_CELL_PADDING": "0",
+    "DIODE_PADDING": "0",
+
+    "ROUTING_CORES": "24",
+
+    "RUN_MAGIC_DRC": 1,
+
+    "GRT_ADJUSTMENT": "0.2",
+    "GRT_ANT_ITERS": "1",
+    "RUN_ANTENNA_REPAIR": 0
+}

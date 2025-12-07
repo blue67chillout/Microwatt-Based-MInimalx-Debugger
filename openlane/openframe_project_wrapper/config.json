@@ -3,35 +3,35 @@
     "VERILOG_DEFINES": "PnR",
     "VERILOG_FILES": [
         "dir::/../../verilog/rtl/openframe_project_netlists.v",
-        "dir::/../../verilog/rtl/openframe_project_wrapper.v"
+        "dir::/../../verilog/rtl/openframe_project_wrapper.v" 
     ],
     "VERILOG_FILES_BLACKBOX": [
-        "dir::../../verilog/gl/user_proj_timer.v",
+        "dir::../../verilog/gl/microwatt_wrapper_usb.v",
         "dir::../../verilog/gl/vccd1_connection.v",
         "dir::../../verilog/gl/vssd1_connection.v"
     ],
     "EXTRA_LEFS": [
-        "dir::../../lef/user_proj_timer.lef",
+        "dir::../../lef/microwatt_wrapper_usb.lef",
         "dir::../../lef/vccd1_connection.lef",
         "dir::../../lef/vssd1_connection.lef"
     ],
     "EXTRA_GDS_FILES": [
-        "dir::../../gds/user_proj_timer.gds",
+        "dir::../../gds/microwatt_wrapper_usb.gds",
         "dir::../../gds/vccd1_connection.gds",
         "dir::../../gds/vssd1_connection.gds"
     ],
-    "EXTRA_LIBS": "dir::../../lib/user_proj_timer.lib",
+    "EXTRA_LIBS": "dir::../../lib/microwatt_wrapper_usb.lib",
     "EXTRA_SPEFS": [
         "user_proj_timer",
-        "dir::../../spef/multicorner/user_proj_timer.min.spef",
-        "dir::../../spef/multicorner/user_proj_timer.nom.spef",
-        "dir::../../spef/multicorner/user_proj_timer.max.spef"
+        "dir::../../spef/multicorner/microwatt_wrapper_usb.min.spef",
+        "dir::../../spef/multicorner/microwatt_wrapper_usb.nom.spef",
+        "dir::../../spef/multicorner/microwatt_wrapper_usb.max.spef"
     ],
     "MAX_TRANSITION_CONSTRAINT": 0.5,
     "ERROR_ON_NL_ASSIGN_STATEMENTS": 0,
     "QUIT_ON_SYNTH_CHECKS": 0,
     "FP_PDN_CHECK_NODES": 0,
-    "SYNTH_ELABORATE_ONLY": 1,
+    "SYNTH_ELABORATE_ONLY": 0,
     "PL_RANDOM_GLB_PLACEMENT": 1,
     "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
     "PL_RESIZER_DESIGN_OPTIMIZATIONS": 0,
@@ -39,12 +39,12 @@
     "GLB_RESIZER_TIMING_OPTIMIZATIONS": 0,
     "GLB_RESIZER_DESIGN_OPTIMIZATIONS": 0,
     "PL_RESIZER_BUFFER_INPUT_PORTS": 0,
-    "RUN_CTS": 0,
-    "FP_PDN_ENABLE_RAILS": 0,
-    "GRT_REPAIR_ANTENNAS": 0,
-    "RUN_HEURISTIC_DIODE_INSERTION": 0,
-    "RUN_FILL_INSERTION": 0,
-    "RUN_TAP_DECAP_INSERTION": 0,
+    "RUN_CTS": 1,
+    "FP_PDN_ENABLE_RAILS": 1,
+    "GRT_REPAIR_ANTENNAS": 1,
+    "RUN_HEURISTIC_DIODE_INSERTION": 1,
+    "RUN_FILL_INSERTION": 1,
+    "RUN_TAP_DECAP_INSERTION": 1,
     "FP_PDN_VPITCH": 40,
     "FP_PDN_HPITCH": 40,
     "FP_PDN_VOFFSET": 18.43,
@@ -77,7 +77,7 @@
     "FP_DEF_TEMPLATE": "dir::fixed_dont_change/openframe_project_wrapper.def",
     "MACRO_PLACEMENT_CFG": "dir::macro.cfg",
     "RUN_LINTER": 0,
-    "RUN_LVS": 0,
+    "RUN_LVS": 1,
     "MAGIC_DEF_LABELS": 0,
     "MAGIC_EXT_USE_GDS": true,
     "// ApplyDEFTemplate": "permissive because of a bug in LibreLane where the power pins have to be at least declared in strict mode.",
@@ -99,5 +99,8 @@
         "vdda2",
         "vddio",
         "vssio"
-    ]
+    ]  ,
+  
+   "GRT_ADJUSTMENT" : 0.45  ,
+   "PL_TARGET_DENSITY" : 0.4
 }

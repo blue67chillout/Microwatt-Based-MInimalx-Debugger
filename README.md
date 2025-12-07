@@ -151,7 +151,7 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 
 ## Contact
 
-Questions, issues, and collaboration: Open an issue in this repo or contact the maintainer through mail ( fridayfallacy67@gmail.com ).
+Questions, issues, and collaboration: Open an issue in this repo or contact the maintainer fridayfallacy67@gmail.com .
 
 ---
 

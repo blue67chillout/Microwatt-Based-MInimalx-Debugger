@@ -1,24 +1,42 @@
-# Caravel user project includes
--v $(USER_PROJECT_VERILOG)/dv/firmware/spiflash.v
--v $(USER_PROJECT_VERILOG)/rtl/openframe_project_wrapper.v	     
--v $(USER_PROJECT_VERILOG)/rtl/picosoc.v
--v $(USER_PROJECT_VERILOG)/rtl/picorv32.v
--v $(USER_PROJECT_VERILOG)/rtl/spimemio.v
--v $(USER_PROJECT_VERILOG)/rtl/simpleuart.v
--v $(USER_PROJECT_VERILOG)/rtl/clock_routing.v
--v $(USER_PROJECT_VERILOG)/rtl/clock_div.v
--v $(USER_PROJECT_VERILOG)/rtl/housekeeping.v
--v $(USER_PROJECT_VERILOG)/rtl/housekeeping_spi.v
--v $(USER_PROJECT_VERILOG)/rtl/digital_locked_loop.v
--v $(USER_PROJECT_VERILOG)/rtl/dll_controller.v
--v $(USER_PROJECT_VERILOG)/rtl/ring_osc2x13.v
--v $(USER_PROJECT_VERILOG)/rtl/simple_spi_master.v
--v $(USER_PROJECT_VERILOG)/rtl/counter_timer_high.v
--v $(USER_PROJECT_VERILOG)/rtl/counter_timer_low.v
--v $(USER_PROJECT_VERILOG)/rtl/intercon_wb.v
--v $(USER_PROJECT_VERILOG)/rtl/mem_wb.v
--v $(USER_PROJECT_VERILOG)/rtl/gpio_wb.v
--v $(USER_PROJECT_VERILOG)/rtl/gpio_vector_wb.v
--v $(USER_PROJECT_VERILOG)/rtl/debug_regs.v
+# SPI Flash
+-v $(USER_PROJECT_VERILOG)/dv/OpenFrame/vip/spiflash_microwatt.v
+-v $(USER_PROJECT_VERILOG)/dv/OpenFrame/vip/RAM32_1RW1R.v
+-v $(USER_PROJECT_VERILOG)/dv/OpenFrame/vip/multiply_add_64x64.v
+-v $(USER_PROJECT_VERILOG)/dv/OpenFrame/vip/RAM512.v
 
- 
+-v $(USER_PROJECT_VERILOG)/rtl/vccd1_connection.v
+-v $(USER_PROJECT_VERILOG)/rtl/vssd1_connection.v
+-v $(USER_PROJECT_VERILOG)/rtl/Microwatt_FP_DFFRFile.v
+-v $(USER_PROJECT_VERILOG)/rtl/tap_top.v
+
+# UART
+-v $(USER_PROJECT_VERILOG)/rtl/raminfr.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_defines.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_receiver.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_regs.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_rfifo.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_sync_flops.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_tfifo.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_top.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_transmitter.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart_wb.v
+
+# USB
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_crc16.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_crc5.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_fifo.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_host_defs.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_host.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_sie.v
+-v $(USER_PROJECT_VERILOG)/rtl/usbh_wb.v
+-v $(USER_PROJECT_VERILOG)/rtl/ulpi_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/two_flop_sync.v
+
+# JTAG Master
+-v $(USER_PROJECT_VERILOG)/rtl/jtag_master_controller.v
+
+# Microwatt
+-v $(USER_PROJECT_VERILOG)/rtl/microwatt_asic_usb.v
+-v $(USER_PROJECT_VERILOG)/rtl/microwatt_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/openframe_project_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/sky130_fd_sc_hd__buf.behavioral.v

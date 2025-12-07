@@ -31,7 +31,7 @@
 	"LVS_VERILOG_FILES": [
 		"$UPRJ_ROOT/verilog/gl/vccd1_connection.v",
 		"$UPRJ_ROOT/verilog/gl/vssd1_connection.v",
-		"$UPRJ_ROOT/verilog/gl/user_proj_timer.v",
+		"$UPRJ_ROOT/verilog/gl/microwatt_wrapper_usb.v",
 		"$UPRJ_ROOT/verilog/gl/$TOP_SOURCE.v"
 	],
 	"LAYOUT_FILE": "$UPRJ_ROOT/gds/$TOP_LAYOUT.gds"

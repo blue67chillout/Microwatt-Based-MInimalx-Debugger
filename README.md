@@ -1,10 +1,11 @@
 # Microwatt-Based Debugger ASIC 
 
+A custom SoC based on the Microwatt core, redesigned for ASIC fabrication and extended with a USB controller, JTAG master, external SPI-boot capability, and custom memory macros.
+
 ---
 
 ## Getting Started
 
-### SoC Parameters
 
 ### SoC Generic Parameters
 
@@ -36,15 +37,15 @@
 |---------------|-------------------------------|---------------|
 | UART          | Serial communication (16550)  | ✔️ Enabled    |
 | USB           | USB Controller      | ✔️ Included |
-| JTAG Master   | Debug interface for Target SoC         | ✔️ Included, but not fully tested    |
+| JTAG Master   | Debug interface for Target SoC         | ✔️ Included   |
 | SPI Flash     | SPI for boot storage     | ✔️ Enabled    |
 | GPIO          | 32-bit general-purpose I/O     | ✔️ Enabled    |
 
 
 ### 1. Building the SoC
 
-The original Microwatt SoC was written in VHDL and designed for FPGA, containing FPGA-specific blocks such as BRAMs and LiteX components.  
-To prepare it for ASIC implementation, some modules were replaced and filtered for the same, and the design was converted from VHDL to Verilog using Yosys VHDL plugin(via the ghdl:yosys docker image).
+- The original Microwatt SoC was written in VHDL and designed for FPGA, containing FPGA-specific blocks such as BRAMs and LiteX components.  
+- To prepare it for ASIC implementation, some modules were replaced and filtered for the same, and the design was converted from VHDL to Verilog using Yosys VHDL plugin(via the ghdl:yosys docker image).
 
 This generated a Verilog version of the full SoC suitable for ASIC flow.
 
@@ -60,7 +61,11 @@ hierarchy -check -top soc; \
 write_verilog microwatt.v \
 "
 ```
-The second challenge included replacing the current cache_ram, register_file and main_bram/main_memory with equivalent sram macros. In the first iteration, sky130 based openram macros were utilized and tested, however due to the prevelant relibility issues, the implementation had to be dropped in the last moment, however options recommended by the organizers( OL-DFFRAM and Commercial Sram) would satisy my main_memory requirements, but can't satisfy the requirements of multiple ports, as presented in the cache_ram and register file. Therefore quite late in the submission, we discoverd DFFRAM compiler, and met our requirements with the same 
+- The second challenge required replacing the existing cache_ram, register_file, and main_bram/main_memory with compatible SRAM macros.
+- In the first iteration, the team used Sky130-based OpenRAM macros and validated them in simulation.
+- Due to persistent reliability issues, the OpenRAM-based solution had to be dropped late in the design cycle.
+- Alternatives recommended by the organizers were OL-DFFRAM and commercial SRAM which were suitable for main memory but failed to meet the multi-port requirements of the cache RAM and register file.
+- Late in the submission process, the team identified the DFFRAM compiler, which finally met both the functional and port requirements, making it the appropriate solution.
 
 ```
 git clone https://github.com/AUCOHL/DFFRAM.git
@@ -79,12 +84,10 @@ nix develop
 
 ### 2. Booting from SPI Flash
 
-ASIC systems cannot rely on internal memories for boot, so the SoC must boot from external SPI flash.
-
-A testbench was created where a SPI flash model is instantiated externally and connected to the SoC.  
-This flash model sends SPI signals containing the `.hex` firmware file to the SoC during boot.
-
-The `.hex` file is the binary of the firmware (for example, a UART test program).
+- ASIC systems cannot rely on internal memories for boot, so the SoC must boot from external SPI flash.
+- A testbench was created where a SPI flash model is instantiated externally and connected to the SoC.  
+- This flash model sends SPI signals containing the `.hex` firmware file to the SoC during boot.
+- Made `alt_reset` an external signal to enable boot from flash. (Must be driven to High state!)
 
 ---
 
@@ -97,50 +100,40 @@ To verify that the SoC boots correctly and runs firmware, a UART verification te
 - Data is driven to the UART RX pins. 
 - The testbench monitors UART TX to confirm correct transmission.
 
-*Made `alt_reset` an external signal to enable boot from flash.  
-
 ---
 
-### 4. USB Controller Integration
+## SoC Architecture
 
-To enable high-speed host communication, we integrated our custom USB controller into the SoC.  
-The controller was wrapped with a Wishbone interface, allowing it to communicate directly with the Microwatt core and debug master.
+<img width="1643" height="743" alt="soc_block" src="https://github.com/user-attachments/assets/a152d0b2-f44d-455f-b5da-61cfe7c9339a" />
 
-Firmware was written to initialize and handle USB transactions, allowing the SoC to send and receive data to/from the host PC, enabling trace export, firmware loading, and debug control over USB.
+## Added Modules
 
----
+### 1. USB Controller
 
-### DV
+- To enable high-speed host communication, we integrated our custom USB controller into the SoC.  
+- The controller was wrapped with a Wishbone interface, allowing it to communicate directly with the Microwatt core and debug master.
+- Firmware was written to initialize and handle USB transactions, allowing the SoC to send and receive data to/from the host PC.
+- Since most modern PHYs are ULPI, a ULPI wrapper was created.
+- Clock Domain Crossing (CDC) Bridge was introduced to ensure clean transfer between domains (UTMI (SoC, 50 MHz) → ULPI wrapper (60 MHz))
 
-You can find the dv @ verilog/dv/Caravel/microwatt/uart | usb
+### 2. JTAG Master Controller
 
-#### Steps:
-
-- Download and extract the powerpc64 cross compiler [Download from here!](https://toolchains.bootlin.com/downloads/releases/toolchains/powerpc64le-power8/tarballs/powerpc64le-power8--glibc--stable-2025.08-1.tar.xz) to your /home directory
-- Make sure to add the path of powerpc64 binaries to your path environmental variable
-```
-export PATH=~/powerpc64le-power8--glibc--stable-2025.08-1/bin:$PATH
-```
-- (For uart test)
-```
-cd verilog/dv/Caravel/microwatt/uart
-make all
-```
-- (For jtag test)
-```
-cd verilog/dv/Caravel/microwatt/jtag
-make all
-```
-- Make sure to run `make clean` after performing the test
+The on-chip JTAG master provides:
+- Direct debug/control of an external target SoC.
+- Wishbone-mapped registers.
+- Support for shift, update, instruction register operations.
+- Muxing logic was introduced to switch between JTAG Slave and Master modules to save GPIO Pins.
 
 
-### Debug FLow
+## DV (Design Verification)
+
+You can find the dv tests @ verilog/dv/OpenFrame/microwatt
+Check out the design verification readme for instructions to perform the tests.
+
+
+## Debug Flow
 
 <img width="822" height="564" alt="Screenshot 2025-11-04 at 7 46 50 PM" src="https://github.com/user-attachments/assets/eb76fd8e-5821-41d8-96e7-f3f725f524b3" />
-
-
- 
-
 
 
 ## License
@@ -154,5 +147,3 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 Questions, issues, and collaboration: Open an issue in this repo or contact the maintainer fridayfallacy67@gmail.com .
 
 ---
-
-

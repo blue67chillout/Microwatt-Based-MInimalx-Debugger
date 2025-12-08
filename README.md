@@ -36,7 +36,7 @@
 |---------------|-------------------------------|---------------|
 | UART          | Serial communication (16550)  | ✔️ Enabled    |
 | USB           | USB Controller      | ✔️ Included |
-| JTAG Master   | Debug interface for Target SoC         | ✔️ Included, but not fully tested    |
+| JTAG Master   | Debug interface for Target SoC         | ✔️ Included |
 | SPI Flash     | SPI for boot storage     | ✔️ Enabled    |
 | GPIO          | 32-bit general-purpose I/O     | ✔️ Enabled    |
 
@@ -107,6 +107,15 @@ To enable high-speed host communication, we integrated our custom USB controller
 The controller was wrapped with a Wishbone interface, allowing it to communicate directly with the Microwatt core and debug master.
 
 Firmware was written to initialize and handle USB transactions, allowing the SoC to send and receive data to/from the host PC, enabling trace export, firmware loading, and debug control over USB.
+
+---
+
+### 5. JTAG Master Controller Integration
+
+To enable external target debugging, we integrated our custom JTAG Master controller into the SoC. 
+The controller exposes a compact Wishbone register interface for controlling TCK generation, TAP sequencing, and shift operations.
+
+Firmware support was added to configure the controller registers, trigger shift operations, poll status/interrupts, and read back TDO data.
 
 ---
 

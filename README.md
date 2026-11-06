@@ -1,6 +1,6 @@
 # Microwatt-Based Debugger ASIC 
 
-A custom SoC based on the Microwatt core, redesigned for ASIC fabrication and extended with a USB controller, JTAG master, external SPI-boot capability, and custom memory macros.
+A custom SoC based on the Microwatt core, redesigned for ASIC fabrication and extended with a USB controller, JTAG master, external SPI-boot capability.
 
 ---
 
